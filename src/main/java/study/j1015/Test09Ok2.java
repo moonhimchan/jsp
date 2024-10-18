@@ -9,18 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-@WebServlet("/1015/Test08Ok2")
-public class Test08Ok2 extends HttpServlet {
+@WebServlet("/1015/Test09Ok2") //무조건 필수적인 주소
+public class Test09Ok2 extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=utf-8");
-		
-//		String mid = request.getParameter("mid");
-//		if(mid==null) mid="";
-		
-//		String pwd = request.getParameter("pwd");
-//		if(pwd==null) pwd="";
 		
 		String mid = request.getParameter("mid") ==null ? "" : request.getParameter("mid");
 		String pwd = request.getParameter("pwd") ==null ? "": request.getParameter("pwd");  
@@ -30,14 +24,21 @@ public class Test08Ok2 extends HttpServlet {
 		
 		
 		if(mid.equals("admin") && pwd.equals("1234")) {
-			response.sendRedirect("/javaGroup/study/1015/test08Admin.jsp");
+			// response.sendRedirect("/javaGroup/study/1015/test09Admin.jsp"); // 콘테스트명
+			response.sendRedirect(request.getContextPath()+"/study/1015/test09Admin.jsp?mid="+mid);
 		}
-		else if(mid.equals("hkd1234") && pwd.equals("1234")) {
-			response.sendRedirect("/javaGroup/study/1015/test08Member.jsp");
+		else if((mid.equals("hkd1234") && pwd.equals("1234")) || (mid.equals("kms1234") && pwd.equals("1234"))) {
+			response.sendRedirect(request.getContextPath()+"/study/1015/test09Member.jsp?mid="+mid);
 		}
 		else {
-			response.sendRedirect("/javaGroup/study/1015/test08.jsp?flag=no");
+			response.sendRedirect(request.getContextPath()+"/study/1015/test09.jsp?flag=no");
 		}
+	}
+	
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+		// get방식을 dopost로 이용해서 post방식으로 전환
 	}
 	
 }
