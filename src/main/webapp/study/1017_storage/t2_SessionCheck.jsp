@@ -1,3 +1,4 @@
+<%@page import="java.util.Enumeration"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	String mid = (String) session.getAttribute("sMid");
@@ -7,6 +8,19 @@
 	pageContext.setAttribute("mid", mid);
 	pageContext.setAttribute("nickName", nickName);
 	pageContext.setAttribute("name", name);
+
+	// 저장된 세션값들 확인하기
+	Enumeration enumCK = session.getAttributeNames();
+	String sessionName = "";
+	String sessionName_ = "";
+	String sessionValue = "";
+	
+	while(enumCK.hasMoreElements()) {
+		sessionName_ = enumCK.nextElement().toString(); //첫번째 꺼내기 강제 행변환하거나 tostring 하거나
+		sessionName += sessionName_ + "/";
+		sessionValue += session.getAttribute(sessionName_) + "/";
+	}
+	System.out.println(sessionName + "\n" + sessionValue);
 %>
 <!DOCTYPE html>
 <html>
@@ -20,9 +34,10 @@
 <div class="container">
   <h2>세션값 출력</h2>
   <p>아이디 : ${mid}</p>
-  <p>닉네임 : ${nickname}</p>
+  <p>닉네임 : ${nickName}</p>
   <p>성 명 : ${name}</p>
   <hr/>
+  <p>세션 아이디 : <%=session.getId() %></p>
  	<p><a href="t2_Session.jsp" class="btn btn-info">돌아가기</a></p>
 </div>
 <p><br/></p>

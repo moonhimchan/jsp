@@ -13,13 +13,13 @@
   <hr/>
   <form name="myform" method="post" action="t2_SessionSave.jsp"> 
     <div>아이디를 입력하시요
-      <input type="text" name="mid" id="mid" value="" class="form-control mb-2" autofocus required/> 
+      <input type="text" name="mid" id="mid" value="${sMid}" class="form-control mb-2" autofocus required/> 
     </div>
     <div>닉네임을 입력하시요
-      <input type="text" name="nickName" id="nickName" value="" class="form-control mb-2" required>
+      <input type="text" name="nickName" id="nickName" value="${sNickName}" class="form-control mb-2" required>
     </div>
     <div>성명을 입력하시요
-      <input type="text" name="name" id="name" value="" class="form-control mb-2" required>
+      <input type="text" name="name" id="name" value="${sName}" class="form-control mb-2" required>
     </div>
     <div class="row">
       <div class="col"><button type="submit" class="form-control btn-info mb-2">세션저장</button></div>
