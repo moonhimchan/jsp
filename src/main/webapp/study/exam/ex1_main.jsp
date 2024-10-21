@@ -11,7 +11,7 @@
 <body>
 <p><br/></p>
 <div class="container">
-  <h2>이곳은 회원 메인방입니다.</h2>
+  <h2>이곳은 회원(${sMid}) 메인방입니다.</h2>
   <hr/>
   <div>
     <a href="${ctp}/study/exam/ex1_Login.jsp" class="btn btn-warning">돌아가기</a>
