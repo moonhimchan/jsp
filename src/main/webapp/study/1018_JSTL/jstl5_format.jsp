@@ -59,10 +59,11 @@
 		<hr/><hr/>
 		
 		6. URL이동 : location.href / response.sendRedirect ==> redirect(core에 있음)<br/>
-		<!-- <c:redirect url="http://www.naver.com"></c:redirect> -->
+		<!-- 
 		<c:redirect url="사이트주소">
 			<c:param name="변수명" value="값" />
-		</c:redirect>			
+		</c:redirect>		
+		-->	
   </div>
 </div>
 <p><br/></p>
