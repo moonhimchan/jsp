@@ -10,6 +10,8 @@
   <jsp:include page="/include/bs4.jsp" />
 </head>
 <body>
+<jsp:include page="/include/header.jsp" />
+<jsp:include page="/include/nav.jsp" />
 <p><br/></p>
 <div class="container">
   <h2>EL(Expression Language)</h2>
@@ -115,7 +117,8 @@
 	<p>취미(param) : ${param.hobby} (O)</p>	
 <%} %>	
 	<div><b>작업끝.............</b></div>
-</div>
-<p><br/></p>
+  </div>
+ <p><br/></p>
+<jsp:include page="/include/footer.jsp" />
 </body>
 </html>
