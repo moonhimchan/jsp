@@ -24,11 +24,12 @@
 			      Study1
 			    </button>
 			    <div class="dropdown-menu">
-			      <a class="dropdown-item" href="${ctp}/mapping/Test1">mapping(Directory 패턴) 연습</a>
+			      <a class="dropdown-item" href="${ctp}/study2/mapping/Test1">mapping(Directory 패턴) 연습</a>
 			      <a class="dropdown-item" href="${ctp}/study2/mapping/Test2">mapping(확장자 패턴) 연습</a>
 			      <a class="dropdown-item" href="${ctp}/study2/test/StorageMenu">Storage 연습</a>
 			      <a class="dropdown-item" href="${ctp}/study/1018_JSTL/el.jsp">EL 연습</a>
 			      <a class="dropdown-item" href="${ctp}/study/1018_JSTL/jstlMenu.jsp">JSTL 연습</a>
+			      <a class="dropdown-item" href="${ctp}/study2/database/DbList">Database 연습</a>
 			    </div>
 			  </div>
       </li>    
