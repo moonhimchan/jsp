@@ -3,6 +3,6 @@
 <div style="width:100%; height:80px; background-color:gray">
 	<br/>
 	<div style="text-align:center">
-	  Copyright : 2024. 10. 16 Design by Happy Cheon
+	  Copyright : 2024. 10. 22 Design by Moon
 	</div>
 </div>

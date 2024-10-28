@@ -41,17 +41,15 @@
         <c:if test="${sAdmin == 'adminOk'}"><a href="GuestAdminOut.gu" class="btn btn-outline-primary btn-sm">관리자로그아웃</a></c:if>		      
       </td>
       <td class="text-right">
-      	<c:if test="${pag > 1}">
-       	</c:if>
+      	<c:if test="${pag > 1}"></c:if> 
        	  <a href="GuestList.gu?pag=1" title="첫페이지">◁◁</a>
-       	  ||
        	  <a href="GuestList.gu?pag=${pag-1}" title="이전페이지">◀</a>
-       	${pag}/${totPage}
+       	  ${pag}/${totPage}
        	<c:if test="${pag < totPage}">
        	  <a href="GuestList.gu?pag=${pag+1}" title="다음페이지">▶</a>       	  
-       	  ||
        	  <a href="GuestList.gu?pag=${totPage}" title="마이막페이지">▷▷</a>
        	</c:if>
+       </ul>
       </td>
     </tr>
   </table>
@@ -100,18 +98,16 @@
   </c:forEach>
 <!-- 블록페이지 시작 -->
 	<div class="text-center">
-		<c:if test="${pag > 1}"><a href="GuestList.gu?pag=1">첫페이지</a></c:if>
-		|
-		<c:if test="${curBlock > 0}"><a href="GuestList.gu?pag=${(curBlock-1)*blockSize+1}">이전블록</a></c:if>
-		|
+	 <ul class="pagination">
+		<c:if test="${pag > 1}"><a href="GuestList.gu?pag=1" class="page-link text-secondary" >첫페이지</a></c:if>
+		<c:if test="${curBlock > 0}"><a href="GuestList.gu?pag=${(curBlock-1)*blockSize+1}" class="page-link bg-text-secondary">이전블록</a></c:if>
 		<c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize)+blockSize}" varStatus="st">
-			<c:if test="${i <= totPage && i== pag}"><a href="GuestList.gu?pag=${i}"><font color='red'>${i}</font></a></c:if>
-			<c:if test="${i <= totPage && i!= pag}"><a href="GuestList.gu?pag=${i}">${i}</a></c:if>
+			<c:if test="${i <= totPage && i== pag}"><a href="GuestList.gu?pag=${i}" class="page-link text-secondary"><font color='red'>${i}</font></a></c:if>
+			<c:if test="${i <= totPage && i!= pag}"><a href="GuestList.gu?pag=${i}" class="page-link text-secondary">${i}</a></c:if>
 		</c:forEach>
-		|
-		<c:if test="${curBlock < lastBlock}"><a href="GuestList.gu?pag=${(curBlock+1)*blockSize+1}">다음블록</a></c:if>
-		|
-		<c:if test="${curBlock > 0}"><a href="GuestList.gu?pag=${totPage}">마지막페이지</a></c:if>	
+		<c:if test="${curBlock < lastBlock}"><a href="GuestList.gu?pag=${(curBlock+1)*blockSize+1}" class="page-link text-secondary">다음블록</a></c:if>
+		<c:if test="${curBlock > 0}"><a href="GuestList.gu?pag=${totPage}" class="page-link text-secondary">마지막페이지</a></c:if>	
+		</ul>
 	</div>
 <!-- 블록페이지 끝 -->
 </div>
