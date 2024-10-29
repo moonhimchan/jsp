@@ -3,7 +3,7 @@
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <%-- <a class="navbar-brand" href="${ctp}/">Home</a> --%>
-  <a class="navbar-brand" href="http://192.168.50.60:9090/javaGroup">Home</a>
+  <a class="navbar-brand" href="http://192.168.50.64:9090/javaGroup">Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -54,6 +54,9 @@
       <li class="nav-item">
         <c:if test="${!empty sNickName}"><a class="nav-link" href="MemberLogout.mem">Logout</a></c:if>
         <c:if test="${empty sNickName}"><a class="nav-link" href="MemberLogin.mem">Login</a></c:if>
+      </li>
+      <li class="nav-item">
+        <c:if test="${empty sNickName}"><a class="nav-link" href="MemberJoin.mem">Join</a></c:if>
       </li>
     </ul>
   </div>

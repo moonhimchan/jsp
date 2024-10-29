@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
 @WebServlet("*.mem")
-public class MemberController extends HttpServlet{
+public class MemberController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		MemberInterface command = null;
@@ -37,6 +37,24 @@ public class MemberController extends HttpServlet{
 			command = new MemberMainCommand();
 			command.execute(request, response);
 			viewPage += "/memberMain.jsp";
+		}
+		else if(com.equals("/MemberJoin")) {
+			viewPage += "/memberJoin.jsp";
+		}
+		else if(com.equals("/MemberJoinOk")) {
+			command = new MemberJoinOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/MemberIdCheck")) {
+			command = new MemberIdCheckCommand();
+			command.execute(request, response);
+			viewPage += "/memberIdCheck.jsp";
+		}
+		else if(com.equals("/MemberNickNameCheck")) {
+			command = new MemberNickNameCheckCommand();
+			command.execute(request, response);
+			viewPage += "/memberNickNameCheck.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

@@ -13,15 +13,16 @@ public class MemberVO {
 	private String email;
 	private String content;
 	private String photo;
-	private int level; 
-	private String usedrInfor;
+	private int level;
+	private String userInfor;
 	private String userDel;
 	private int point;
 	private int visitCnt;
 	private int todayCnt;
 	private String startDate;
 	private String lastDate;
-	private String salt;
+	
+	private String tempMid;	// 아이디 중복체크를위한 임시 아이디
 	
 	public int getIdx() {
 		return idx;
@@ -102,10 +103,10 @@ public class MemberVO {
 		this.level = level;
 	}
 	public String getUserInfor() {
-		return usedrInfor;
+		return userInfor;
 	}
-	public void setUserInfor(String usedrInfor) {
-		this.usedrInfor = usedrInfor;
+	public void setUserInfor(String userInfor) {
+		this.userInfor = userInfor;
 	}
 	public String getUserDel() {
 		return userDel;
@@ -143,19 +144,19 @@ public class MemberVO {
 	public void setLastDate(String lastDate) {
 		this.lastDate = lastDate;
 	}
-	public String getSalt() {
-		return salt;
+	public String getTempMid() {
+		return tempMid;
 	}
-	public void setSalt(String salt) {
-		this.salt = salt;
+	public void setTempMid(String tempMid) {
+		this.tempMid = tempMid;
 	}
 	
 	@Override
 	public String toString() {
 		return "MemberVO [idx=" + idx + ", mid=" + mid + ", pwd=" + pwd + ", nickName=" + nickName + ", name=" + name
 				+ ", gender=" + gender + ", birthday=" + birthday + ", tel=" + tel + ", address=" + address + ", email=" + email
-				+ ", content=" + content + ", photo=" + photo + ", level=" + level + ", userInfor=" + usedrInfor + ", userDel="
+				+ ", content=" + content + ", photo=" + photo + ", level=" + level + ", userInfor=" + userInfor + ", userDel="
 				+ userDel + ", point=" + point + ", visitCnt=" + visitCnt + ", todayCnt=" + todayCnt + ", startDate="
-				+ startDate + ", lastDate=" + lastDate + ", salt=" + salt + "]";
+				+ startDate + ", lastDate=" + lastDate + ", tempMid=" + tempMid + "]";
 	}
 }
