@@ -118,6 +118,7 @@
         myform.nickName.focus();
         return false;
       }
+    	nickCheckSw = 1;
     	
     	$.ajax({
     		type : "get",
