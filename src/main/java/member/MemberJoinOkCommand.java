@@ -32,7 +32,7 @@ public class MemberJoinOkCommand implements MemberInterface {
 			birthday = today.toString();
 		}
 		
-		// 비밀번호 암호화
+		// 비밀번호 암호화 : (int) Math.random() * (최댓값-최소값+1) + 최소값
 		long temp = (int)(Math.random()*(999-100+1))+100;
 		String salt = temp + "";
 		

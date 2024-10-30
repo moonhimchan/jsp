@@ -31,4 +31,4 @@ insert into member values (default, 'admin', 'asdf1234', 'arsenal_4th', '관리�
 select * from member;
 
 
-
+select max(point) as point, mid,name from member;
