@@ -22,12 +22,11 @@ public class AjaxPointCheck extends HttpServlet {
 		
 		String res = "";
 		if(vo.getName() == null) {
-			res = "찾는 아이디가 없습니다.";
+			res = "찾는 자료가 없습니다.";
 		}
 		else {
-			res = vo.getMid()+"/"+vo.getName()+"/"+vo.getPoint();
+			res = "아이디 : "+vo.getMid()+" , 성명 : "+vo.getName()+" , 포인트 : "+vo.getPoint();
 		}
 		response.getWriter().write(res);
 	}
-	
 }

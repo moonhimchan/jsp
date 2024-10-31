@@ -15,7 +15,7 @@ import study2.StudyDAO;
 public class AjaxIdCheck2 extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
+		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
 		
 		StudyDAO dao = new StudyDAO();
 		
@@ -23,8 +23,7 @@ String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid"
 		
 		if(name.equals("")) {
 			name = "찾는 아이디가 없습니다.";
-		}		
-			response.getWriter().write(name);
 		}
-	
+		response.getWriter().write(name);
+	}
 }

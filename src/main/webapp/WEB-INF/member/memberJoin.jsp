@@ -29,7 +29,7 @@
   	// 정규식을 이용한 유효성검사처리.....
   	let regMid = /^[a-zA-Z0-9_]{4,20}$/;	// 아이디는 4~20의 영문 대/소문자와 숫자와 밑줄 가능
     let regNickName = /^[가-힣0-9_]{2,20}$/;			// 닉네임은 한글, 숫자, 밑줄만 2~20자 가능
-    let regName = /^[가-힣a-zA-Z0-9]{2,20}$/;				// 이름은 한글/영문 2~20자 가능
+    let regName = /^[가-힣a-zA-Z0-9]{2,20}$/;				// 이름은 한글/영문/숫자 2~20자 가능
     
     function fCheck() {
     	let mid = myform.mid.value;
@@ -44,7 +44,7 @@
     	
     	let tel = myform.tel1.value + "-" + tel2 + "-" + tel3;
     	let email = myform.email1.value + "@" + myform.email2.value;
-    	let address = myform.postcode.value+" /"+myform.address.value+" /"+myform.detailAddress.value+" /"+myform.extraAddress.value;
+    	let address = myform.postcode.value+" /"+myform.address.value+" /"+myform.detailAddress.value+" /"+myform.extraAddress.value+" ";
     	
     	if(!regMid.test(mid)) {
     		alert("아이디는 4~20자리의 영문 소/대문자와 숫자, 언더바(_)만 사용가능합니다.");
@@ -111,6 +111,22 @@
     }
     
     // 닉네임 중복체크
+    function nickNameCheck() {
+    	let nickName = myform.nickName.value;
+    	if(!regNickName.test(nickName)) {
+        alert("닉네임은 2자리 이상 한글만 사용가능합니다.");
+        myform.nickName.focus();
+        return false;
+      }
+    	else {
+    		nickCheckSw = 1;
+    		
+    		let url = "MemberNickNameCheck.mem?nickName="+nickName;
+    		window.open(url, "nickNameCheckWindow", "width=400px, height=250px");
+    	}
+    }
+    
+    // 닉네임 중복체크(AJax처리)
     function nickNameAjaxCheck() {
     	let nickName = myform.nickName.value;
     	if(!regNickName.test(nickName)) {
@@ -123,15 +139,15 @@
     	$.ajax({
     		type : "get",
     		url  : "NickNameAjaxCheck.mem",
-    		data : {"nickName" : nickName},
+    		data : {nickName : nickName},
     		success:function(res) {
-    			if(res != "0") alert("닉네임이 중복 되었습니다.\n다른 닉네임을 사용하세요.");
-    			else alert("사용하실수 있는 닉네임 입니다. \n계속 처리해 주십시오.");
+    			if(res != "0") alert("닉네임이 중복되었습니다.\n다른 닉네임을 사용하세요.");
+    			else alert("사용하실구 있는 닉네임 입니다.\n계속 처리해 주세요.");
     		},
     		error : function() {
-					alert("전송오류!");
-			  }
-    	  });
+    			alert("전송오류!");
+    		}
+    	});
     }
   </script>
 </head>
@@ -168,6 +184,7 @@
           <div class="input-group">
 	          <input type="text" name="nickName" id="nickName" placeholder="닉네임을 입력하세요" class="form-control" required />
 	          <div class="input-group-append ml-1">
+	          	<!-- <input type="button" value="닉네임 중복체크" onclick="nickNameCheck()" id="nickNameBtn" class="form-control btn-secondary" /> -->
 	          	<input type="button" value="닉네임 중복체크" onclick="nickNameAjaxCheck()" id="nickNameBtn" class="form-control btn-secondary" />
 	          </div>
           </div>
@@ -229,6 +246,7 @@
 	          <div class="input-group-append ml-1">
 		          <select id="email2" name="email2" class="form-control">
 		            <option value="naver.com">naver.com</option>
+		            <option value="hanmail.net">hanmail.net</option>
 		            <option value="daum.net">daum.net</option>
 		            <option value="gmail.com">gmail.com</option>
 		          </select>

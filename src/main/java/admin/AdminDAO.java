@@ -1,4 +1,4 @@
-package study2;
+package admin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import common.GetConn;
 import member.MemberVO;
 
-public class StudyDAO {
+public class AdminDAO {
 	private Connection conn = GetConn.getConn();
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;

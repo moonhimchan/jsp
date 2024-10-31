@@ -10,7 +10,7 @@ public class NickNameAjaxCheckCommand implements MemberInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    String nickName = request.getParameter("nickName")==null ? "" : request.getParameter("nickName");
+		String nickName = request.getParameter("nickName")==null ? "" : request.getParameter("nickName");
 		
 		MemberDAO dao = new MemberDAO();
 		
