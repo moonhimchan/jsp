@@ -18,11 +18,11 @@ public class GuestAdminOkCommand implements GuestInterface {
 			HttpSession session = request.getSession();
 			session.setAttribute("sAdmin", "adminOk");
 			
-			request.setAttribute("message", "관리자 인증 성공!");
-			request.setAttribute("url", "GuestList.gu");			
+			request.setAttribute("message", "관리자 인증 성공!!");
+			request.setAttribute("url", "GuestList.gu");
 		}
 		else {
-			request.setAttribute("message", "관리자 인증 실패!");
+			request.setAttribute("message", "관리자 인증 실패~~~");
 			request.setAttribute("url", "GuestAdmin.gu");
 		}
 	}

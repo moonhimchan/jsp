@@ -32,11 +32,11 @@ public class GuestInputOkCommand implements GuestInterface {
 		int res = dao.setGuestInputOk(vo);
 		
 		if(res != 0) {
-			request.setAttribute("message", "방명록에 글이 등록 되었습니다.");
+			request.setAttribute("message", "방명록에 글이 등록되었습니다.");
 			request.setAttribute("url", "/GuestList.gu");
 		}
 		else {
-			request.setAttribute("message", "방명록에 등록 길패~~~");
+			request.setAttribute("message", "방명록 등록 실패~~");
 			request.setAttribute("url", "/GuestInput.gu");
 		}
 	}

@@ -57,6 +57,4 @@ public class GuestVO {
 		return "GuestVO [idx=" + idx + ", name=" + name + ", content=" + content + ", email=" + email + ", homePage="
 				+ homePage + ", visitDate=" + visitDate + ", hostIp=" + hostIp + "]";
 	}
-	
-	
 }

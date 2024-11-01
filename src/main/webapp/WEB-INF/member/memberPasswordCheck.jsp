@@ -8,49 +8,49 @@
   <title>memberPasswordCheck.jsp</title>
   <jsp:include page="/include/bs4.jsp" />
   <script>
-  	'usr strict';
-  	
-  	$(function () {
-			$("#pwdDemo").hide();
-	  });
-  	
-  	function pwdReCheck() {
-			let pwd = $("#pwd").val().trim();
-			if(pwd == "") {
-				alert("현재 비밀번호를 입력하세요.");
-				$("#pwd").focus();
-				return false;
-			} 
-			  
-			$.ajax({
-				type : "get",
-				url  : "MemberPwdCheckAjax.mem",
-				data : {pwd : pwd},
-				success:function(res) {
-					if(res != '0') $("#pwdDemo").show();
-					else alert("비밀번호가 틀립니다. 확인하세요.");
-				},
-				error : function() { alert("전송오류"); }
-			});
-	  }
-  	
-  	// 비밀번호 변경처리
-  	function pwdChangeCheck() {
-			let pwdCheck = $("#pwdCheck").val();
-			let pwdCheckRe = $("#pwdCheckRe").val();
-			
-			if(pwdCheck.trim() == "" || pwdCheckRe.trim()=="" || pwdCheck.length < 2 || pwdCheckRe.length < 2) {
-				alert("변경할 비밀번호를 입력하세요.");
-				$("#pwdCheck").focus();
-				return false;
-			}
-			else if(pwdCheck.trim() != pwdCheckRe.trim()) {
-				alert("새로 입력한 비밀번호가 서로 틀립니다. 확인하세요");
-				$("#pwdCheck").focus();
-				return false;
-			}
-			else pwdForm.submit();
-	  }
+    'use strict';
+    
+    $(function(){
+    	$("#pwdDemo").hide();
+    });
+    
+    function pwdReCheck() {
+    	let pwd = $("#pwd").val().trim();
+    	if(pwd == "") {
+    		alert("현재 비밀번호를 입력하세요");
+    		$("#pwd").focus();
+    		return false;
+    	}
+    	
+    	$.ajax({
+    		type  : "get",
+    		url   : "MemberPwdCheckAjax.mem",
+    		data  : {pwd : pwd},
+    		success:function(res) {
+    			if(res != 0) $("#pwdDemo").show();
+    			else alert("비밀번호가 틀립니다. 확인하세요");
+    		},
+    		error : function() { alert("전송오류!");	}
+    	});
+    }
+    
+    // 비밀번호 변경처리
+    function pwdChangCheck() {
+    	let pwdCheck = $("#pwdCheck").val();
+    	let pwdCheckRe = $("#pwdCheckRe").val();
+    	
+    	if(pwdCheck.trim() == "" || pwdCheckRe.trim() == "" || pwdCheck.length < 2 || pwdCheckRe.length < 2 ) {
+    		alert("변경할 비밀번호를 입력하세요");
+    		$("#pwdCheck").focus();
+    		return false;
+    	}
+    	else if(pwdCheck.trim() != pwdCheckRe.trim()) {
+    		alert("새로 입력한 비밀번호가 서로 틀립니다. 확인하세요");
+    		$("#pwdCheck").focus();
+    		return false;
+    	}
+    	else pwdForm.submit();
+    }
   </script>
 </head>
 <body>
@@ -79,22 +79,28 @@
 		    </td>
 		  </tr>
 		</table>
-   </form>
-		<div class="text-center" id="pwdDemo">
-		 <h4>비밀번호 변경</h4>
-			<form name="pwdForm" method="post" action="MemberPwdCheckAjaxOk.mem">
-		    <div>변경할 비밀번호
-				  <input type="password" name="pwdCheck" id="pwdCheck" placeholder="새비밀번호를 입력하세요." class="form-control mb-3" required/>
-		    </div>
-		    <div>비밀번호 확인
-				  <input type="password" name="pwdCheckRe" id="pwdCheckRe" placeholder="비밀번호를 한번더 입력하세요." class="form-control mb-3" required/>
-		    </div>
-		    <div>
-		    	<input type="button" value="비밀번호변경" onclick="pwdChangeCheck()" class="btn btn-secondary"/>
-		    </div>
-			</form>
-		</div>
-  </div>
+  </form>
+	<div class="text-center" id="pwdDemo">
+	  <h4>비밀번호 변경</h4>
+	  <form name="pwdForm" method="post" action="MemberPwdCheckAjaxOk.mem">
+	    <table class="table table-bordered">
+	      <tr>
+	  			<th>변경할 비밀번호</th>
+	    	  <td><input type="password" name="pwdCheck" id="pwdCheck" placeholder="새비밀번호를 입력하세요" class="form-control mb-3" required></td>
+	    	</tr>
+	    	<tr> 
+	  			<th>비밀번호 확인</th>
+	    		<td><input type="password" name="pwdCheckRe" id="pwdCheckRe" placeholder="비밀번호를 다시한번더 입력하세요" class="form-control mb-3" required></td>
+	    	</tr>
+	    	<tr>
+			    <td colspan="2">
+			      <input type="button" value="비밀번호변경" onclick="pwdChangCheck()" class="btn btn-secondary"/>
+			    </td>
+			  </tr>
+	    </table>
+	  </form>
+	</div>
+</div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />
 </body>

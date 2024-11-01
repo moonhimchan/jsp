@@ -17,11 +17,12 @@ public class GuestDeleteOkCommand implements GuestInterface {
 		int res = dao.setGuestDeleteOk(idx);
 		
 		if(res != 0) {
-			request.setAttribute("message", "방명록에 글이 삭제되었습니다.");
+			request.setAttribute("message", "방명록에 현재글이 삭제되었습니다.");
 		}
 		else {
-			request.setAttribute("message", "방명록에 삭제 길패~~~");
-	 }
+			request.setAttribute("message", "방명록글 삭제 실패~~");
+		}
 		request.setAttribute("url", "/GuestList.gu");
 	}
+
 }

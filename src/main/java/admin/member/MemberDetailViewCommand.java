@@ -1,5 +1,5 @@
 package admin.member;
-
+		
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -8,19 +8,28 @@ import javax.servlet.http.HttpServletResponse;
 
 import admin.AdminInterface;
 import member.MemberDAO;
-
-public class MemberLevelChangeCommand implements AdminInterface {
-
+import member.MemberVO;
+		
+public class MemberDetailViewCommand implements AdminInterface {
+		
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int level = (request.getParameter("level")==null || request.getParameter("level").equals("")) ? 0 : Integer.parseInt(request.getParameter("level"));
 		int idx = (request.getParameter("idx")==null || request.getParameter("idx").equals("")) ? 0 : Integer.parseInt(request.getParameter("idx"));
 		
+		
 		MemberDAO dao = new MemberDAO();
+		MemberVO vo = dao.getMemberIdxCheck(idx);
 		
-		int res = dao.setMemberLevelChange(level, idx);
+		String strLevel = "";
+		if(vo.getLevel()== 0) strLevel = "관리자";
+		else if(vo.getLevel()== 1) strLevel = "준회원";
+		else if(vo.getLevel()== 2) strLevel = "정회원";
+		else if(vo.getLevel()== 3) strLevel = "우수회원";
+		else if(vo.getLevel()== 99) strLevel = "탈퇴신청회원";
 		
-		response.getWriter().write(res + "");
-	}
-
+		vo.setStrLevel(strLevel);
+		
+		request.setAttribute("vo", vo);
+	} 
+		
 }
