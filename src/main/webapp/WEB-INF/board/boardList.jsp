@@ -10,6 +10,8 @@
   <script>
   	'use strict';
   	
+ 
+  	
     function pageSizeChange() {
     	let pageSize = document.getElementById("pageSize").value;
     	location.href = "BoardList.bo?pageSize="+pageSize+"&pag=${pag}";

@@ -151,6 +151,13 @@
       </td>
     </tr>
   </table>
+  <table class="table table-borderless m-0">
+    <tr>
+      <td class="text-left">
+        <a href="MemberDeleteOk.ad" value="${vo.level == 99}">회원삭제</a>
+      </td>
+    </tr>
+  </table>
   
 <!-- 블록페이지 시작 -->
 <div class="text-center">

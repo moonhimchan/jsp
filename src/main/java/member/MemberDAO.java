@@ -302,7 +302,7 @@ public class MemberDAO {
 	public int setMemberDeleteCheckOk(String mid) {
 		int res = 0;
 		try {
-			sql = "update member set userDel = 'OK', level = 99 where mid = ?";
+			sql = "update member set userDel = 'OK', level = 99,  where mid = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mid);
 			res = pstmt.executeUpdate();
@@ -392,5 +392,20 @@ public class MemberDAO {
 			rsClose();
 		}
 		return vo;
+	}
+
+	public int setMemberDeleteOk() {
+		int res = 0;
+		try {
+			sql = "DELETE FROM member WHERE level = 99 AND created_at <= 2024-12-04";
+			pstmt = conn.prepareStatement(sql);
+			res = pstmt.executeUpdate();
+			System.out.println("vo : " +vo);
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		}	finally {
+			pstmtClose();
+		}
+		return res;
 	}
 }

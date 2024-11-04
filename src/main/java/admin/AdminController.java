@@ -58,6 +58,11 @@ public class AdminController extends HttpServlet {
 			command.execute(request, response);
 			viewPage += "/member/memberDetailView.jsp";
 		}
+		else if(com.equals("/MemberDeleteOk")) {
+			command = new MemberDeleteOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
 
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

@@ -32,3 +32,7 @@ select * from member;
 
 
 select max(point) as point, mid,name from member;
+
+DELETE FROM member WHERE level = 99 AND created_at <= '2024-11-10';
+
+DELETE FROM member WHERE level = 99 AND created_at <= NOW() - INTERVAL 30 DAY;
