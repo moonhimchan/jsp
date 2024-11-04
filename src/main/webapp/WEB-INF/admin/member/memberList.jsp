@@ -60,6 +60,16 @@
     	let pageSize = document.getElementById("pageSize").value;
     	location.href = "MemberList.ad?pageSize="+pageSize+"&pag=${pag}&level=${level}";
     }
+    
+    // 체크박스 부분/전체 선택
+    function selectAll() {
+      let selectAllCheckbox = document.getElementById("selectAll");
+      let checkboxes = document.querySelectorAll('input[name="selectAll"]');
+
+      checkboxes.forEach(checkbox => {
+      	checkbox.checked = selectAllCheckbox.checked;
+      });
+    }
   </script>
 </head>
 <body>
@@ -82,6 +92,7 @@
   </table>
   <table class="table table-hover">
     <tr class="table-secondary">
+    	<th><input type="checkbox" name="selectAll" id="selectAll" onclick="selectAll()"/></th>
       <th>번호</th>
       <th>닉네임</th>
       <th>아이디</th>
@@ -95,6 +106,7 @@
     </tr>
 	  <c:forEach var="vo" items="${vos}" varStatus="st">
 	    <tr <c:if test="${vo.userInfor != '공개'}"> style="background-color:#fcc" </c:if>>
+	    	<td><input type="checkbox" name="selectAll" id="selectAll"/></td>
 	      <td>${vo.idx}</td>
 	      <td>${vo.nickName}</td>
 	      <td><a href="MemberDetailView.ad?idx=${vo.idx}">${vo.mid}</a></td>
