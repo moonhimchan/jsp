@@ -35,11 +35,12 @@ public class BoardDAO {
 		}
 	}
 	
-	
+	// 게시판 전체글 리스트
 	public List<BoardVO> getBoardList(int startIndexNo, int pageSize) {
 		List<BoardVO> vos = new ArrayList<BoardVO>();
 		try {
-			sql = "select * from board order by idx desc limit ?,?";
+			sql = "select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as time_diff"
+					+ " from board order by idx desc limit ?,?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startIndexNo);
 			pstmt.setInt(2, pageSize);
@@ -58,6 +59,10 @@ public class BoardDAO {
 				vo.setGood(rs.getInt("good"));
 				vo.setwDate(rs.getString("wDate"));
 				vo.setClaim(rs.getString("claim"));				
+				
+				vo.setDate_diff(rs.getInt("date_diff"));
+				vo.setTime_diff(rs.getInt("time_diff"));
+				
 				vos.add(vo);
 			}
 		} catch (SQLException e) {
@@ -191,5 +196,59 @@ public class BoardDAO {
 		return res;
 	}
 	
+	
+	int setBoardGoodCheck(int idx, int goodCnt) {
+		int res = 0;
+		try {
+			sql = "update board set good = good + ? where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, goodCnt);
+			pstmt.setInt(2, idx);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		}	finally {
+			pstmtClose();
+	  }
+  	return res;
+  }
+
+	// 검색글 전체 리스트
+	public List<BoardVO> getBoardSearchList(String search, String searchString) {
+		List<BoardVO> vos = new ArrayList<BoardVO>();
+		try {
+			sql = "select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as time_diff"
+					+ "from board order by idx desc limit ?,?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+searchString+"%");
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo = new BoardVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setTitle(rs.getString("title"));
+				vo.setHostIp(rs.getString("hostIp"));
+				vo.setContent(rs.getString("content"));
+				vo.setOpenSw(rs.getString("openSw"));
+				vo.setReadNum(rs.getInt("readNum"));
+				vo.setGood(rs.getInt("good"));
+				vo.setwDate(rs.getString("wDate"));
+				vo.setClaim(rs.getString("claim"));	
+				
+				vo.setDate_diff(rs.getInt("date_diff"));
+				vo.setTime_diff(rs.getInt("time_diff"));
+				
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		}	finally {
+			rsClose();
+	  }
+		return vos;
+	}
+
 	
 }

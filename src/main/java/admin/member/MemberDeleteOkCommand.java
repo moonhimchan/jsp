@@ -1,4 +1,4 @@
-package admin;
+package admin.member;
 
 import java.io.IOException;
 
@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import admin.AdminInterface;
 import member.MemberDAO;
 import member.MemberVO;
 
@@ -19,12 +20,14 @@ public class MemberDeleteOkCommand implements AdminInterface {
 		
 		int res = dao.setMemberDeleteOk();
 		
+		request.setAttribute("res", res);
+		
 		if(res != 0) {
-			request.setAttribute("message", "회원 탈퇴 확정입니다. 30일 후 회원이 탈퇴됩니다..");
+			request.setAttribute("message", "회원 탈퇴 되었습니다");
 			request.setAttribute("url", "MemberMain.mem");
 		}
 		else {
-			request.setAttribute("message", "회원 탈퇴 실패~~~");
+			request.setAttribute("message", "회원 탈퇴 실패했습니다. 삭제는 30일 이후 부터 가능합니다.");
 			request.setAttribute("url", "MemberMain.mem");
 		}
 	}

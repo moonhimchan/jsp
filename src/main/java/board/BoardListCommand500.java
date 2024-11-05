@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import member.MemberVO;
 
-public class BoardListCommand implements BoardInterface {
+public class BoardListCommand500 implements BoardInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,6 +32,7 @@ public class BoardListCommand implements BoardInterface {
 		request.setAttribute("vos", vos);
 		request.setAttribute("pag", pag);
 		request.setAttribute("pageSize", pageSize);
+		System.out.println(pageSize);
 		request.setAttribute("totRecCnt", totRecCnt);
 		request.setAttribute("totPage", totPage);
 		request.setAttribute("curScrStartNo", curScrStartNo);

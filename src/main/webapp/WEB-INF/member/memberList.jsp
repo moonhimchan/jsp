@@ -76,6 +76,8 @@
    </ul>
   </div>
   <!-- 블록페이지끝 -->
+  
+  
   <!-- The Modal -->
 <div class="modal fade" id="myModal">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">

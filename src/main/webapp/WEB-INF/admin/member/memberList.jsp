@@ -58,7 +58,7 @@
     // 사용자 페이지 설정
     function pageSizeChange() {
     	let pageSize = document.getElementById("pageSize").value;
-    	location.href = "MemberList.ad?pageSize="+pageSize+"&pag=${pag}&level=${level}";
+    	location.href = "MemberList.ad?pageSize="+pageSize+"&pag=1&level=${level}";
     }
     
     // 체크박스 부분/전체 선택
@@ -121,6 +121,9 @@
 	      <td>
 	        <c:if test="${vo.userDel == 'NO'}">활동중</c:if>
 	        <c:if test="${vo.userDel != 'NO'}"><font color='red'>탈퇴신청중</font>(${vo.elapsed_date})</c:if>
+		      <c:if test="${vo.userDel != 'NO' && vo.elapsed_date >= 30}">
+		       <a href="MemberDeleteOk.ad" value="${vo.level}" style="color: red;">회원삭제</a>
+		      </c:if>
 	      </td>
 	      <td>
 	        <select name="level" id="level" onchange="levelChange(this)">
@@ -135,7 +138,6 @@
   	</c:forEach>
   	<tr><td colspan="10" class="m-0 p-0"></td></tr>
   </table>
-  
   <!-- 사용자 페이지 설정 -->
   <table class="table table-borderless m-0">
     <tr>
@@ -148,13 +150,6 @@
           <option <c:if test="${pageSize == 20}" >selected</c:if> >20</option>
           <option <c:if test="${pageSize == 30}" >selected</c:if> >30</option>
         </select>
-      </td>
-    </tr>
-  </table>
-  <table class="table table-borderless m-0">
-    <tr>
-      <td class="text-left">
-        <a href="MemberDeleteOk.ad" value="${vo.level == 99}">회원삭제</a>
       </td>
     </tr>
   </table>

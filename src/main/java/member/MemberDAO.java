@@ -397,7 +397,7 @@ public class MemberDAO {
 	public int setMemberDeleteOk() {
 		int res = 0;
 		try {
-			sql = "DELETE FROM member WHERE level = 99 AND created_at <= 2024-12-04";
+			sql = "delete from member where level = 99";
 			pstmt = conn.prepareStatement(sql);
 			res = pstmt.executeUpdate();
 			System.out.println("vo : " +vo);
