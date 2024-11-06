@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PropertyResourceBundle;
 
 import admin.claim.ClaimVO;
 import common.GetConn;
@@ -116,11 +115,13 @@ public class AdminDAO {
 	}
 
 	// 신고내역 전체 리스트
-	public List<ClaimVO> getClaimList() {
-		List<ClaimVO> vos = new  ArrayList<ClaimVO>();
+	public List<ClaimVO> getClaimList(int startIndexNo, int pageSize) {
+		List<ClaimVO> vos = new ArrayList<ClaimVO>();
 		try {
-			sql = "select c.*, b.title as title, b.nickName as nickName, b.mid as mid, b.claim as claim from claim c, board b where c.partIdx = b.idx order by idx desc";
+			sql = "select c.*, b.title as title, b.nickName as nickName, b.mid as mid, b.claim as claim from claim c, board b where c.partIdx = b.idx order by idx desc limit ?,?";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startIndexNo);
+			pstmt.setInt(2, pageSize);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -172,18 +173,55 @@ public class AdminDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
 			res = pstmt.executeUpdate();
-			pstmtClose();
+//			pstmtClose();
 			
-			sql = "delete from claim where part=? and partIdx = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, part);
-			pstmt.setInt(2, idx);
-			res = pstmt.executeUpdate();
+//			sql = "delete from claim where part=? and partIdx = ?";
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setString(1, part);
+//			pstmt.setInt(2, idx);
+//			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
 			pstmtClose();
 		}
 		return res;
+	}
+
+	// 신고된 총 자료 건수 구하기
+	public int getTotRecCnt() {
+		int totRecCnt = 0;
+		try {
+			sql = "select count(*) as cnt from claim";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			totRecCnt = rs.getInt("cnt");
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return totRecCnt;
+	}
+
+	// 선택된 게시물들 삭제하기(이때 선택게시물이 신고된 글이라면 신고글도 함께 삭제처리한다.)
+	public void setBoardSelectDelete(int idx) {
+		try {
+			sql = "delete from board where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+//			pstmtClose();
+//			
+//			sql = "delete from claim where part='board' and partIdx = ?";
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setInt(1, idx);
+//			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
 	}
 }

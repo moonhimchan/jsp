@@ -10,6 +10,22 @@
   <script>
     'use strict';
     
+    // 사용자 페이지 설정
+    function pageSizeChange() {
+    	let pageSize = document.getElementById("pageSize").value;
+    	location.href = "ClaimList.ad?pageSize="+pageSize+"&pag=1";
+    }
+    
+    function contentView(content) {
+    	$("#myModal #modalContent").html(content);
+    	/* 
+    	$("#myModal").modal({
+        fadeDuration: 1000,
+        fadeDelay: 0.5,
+      });
+    	*/
+    }
+    
     function claimViewCheck(flag, partIdx) {
     	$.ajax({
     		type : "post",
@@ -60,6 +76,20 @@
 <p><br/></p>
 <div class="container">
   <h2 class="text-center">신 고 리 스 트</h2>
+  <table class="table table-borderless mt-3 mb-0 p-0">
+    <tr>
+      <td class="text-right">한페이지 분량 :
+        <select name="pageSize" id="pageSize" onchange="pageSizeChange()">
+          <option value="3"  <c:if test="${pageSize == 3}"  >selected</c:if>>3건</option>
+          <option value="5" <c:if test="${pageSize == 5}" >selected</c:if>>5건</option>
+          <option value="10" <c:if test="${pageSize == 10}" >selected</c:if>>10건</option>
+          <option value="15" <c:if test="${pageSize == 15}" >selected</c:if>>15건</option>
+          <option value="20" <c:if test="${pageSize == 20}" >selected</c:if>>20건</option>
+          <option value="25" <c:if test="${pageSize == 25}" >selected</c:if>>25건</option>
+        </select>
+      </td>
+    </tr>
+  </table>
   <table class="table table-hover text-center">
     <tr class="table-secondary">
       <th>번호</th>
@@ -90,6 +120,40 @@
     <tr><td colspan="8" class="m-0 p-0"></td></tr>
   </table>
 </div>
+
+<!-- 페이지 처리 시작 -->
+<div class="text-center">
+  <ul class="pagination justify-content-center">
+	  <c:if test="${pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="ClaimList.ad?level=${level}&pageSize=${pageSize}&pag=1">첫페이지</a></li></c:if>
+	  <c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="ClaimList.ad?level=${level}&pageSize=${pageSize}&pag=${(curBlock-1)*blockSize + 1}">이전블록</a></li></c:if>
+	  <c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize) + blockSize}" varStatus="st">
+	    <c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link bg-secondary border-secondary" href="ClaimList.ad?level=${level}&pageSize=${pageSize}&pag=${i}">${i}</a></li></c:if>
+	    <c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link text-secondary" href="ClaimList.ad?level=${level}&pageSize=${pageSize}&pag=${i}">${i}</a></li></c:if>
+	  </c:forEach>
+	  <c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="ClaimList.ad?level=${level}&pageSize=${pageSize}&pag=${(curBlock+1)*blockSize+1}">다음블록</a></li></c:if>
+	  <c:if test="${pag < totPage}"><li class="page-item"><a class="page-link text-secondary" href="ClaimList.ad?level=${level}&pageSize=${pageSize}&pag=${totPage}">마지막페이지</a></li></c:if>
+  </ul>
+</div>
+<!-- 페이지 처리 끝 -->
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">글내용</h3>
+        <button type="button" class="close" data-dismiss="modal">×</button>
+      </div>
+      <div class="modal-body">
+        <span id="modalContent"></span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />
 </body>
