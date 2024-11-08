@@ -5,7 +5,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>fileUpload1.jsp</title>
+  <title>fileUpload5.jsp</title>
   <jsp:include page="/include/bs4.jsp" />
   <script>
     'use strict';
@@ -31,18 +31,6 @@
     		myform.submit();
     	}
     }
-    
-    // 파일 박스 추가하기
-    let cnt = 1;
-    function fileBoxAppend() {
-    	cnt ++;
-			let fileBox = '';
-			fileBox += '<div id="fBox'+cnt+''">';  //오류 '잘못씀
-			fileBox += '<input type="file" name="fName'+cnt+'" id="file'+cnt+'" class="form-control-file border mb-2" style="float:left; width:85%;" />';
-			fileBox += '<input type="button" value="삭제" onclick="deleteBox('+cnt+')" class="btn btn-danger mb-2 ml-2" style="width:10%;" />';
-			fileBox += '</div>';
-			$("#fileBox").append(fileBox);
-    }
   </script>
 </head>
 <body>
@@ -50,22 +38,19 @@
 <jsp:include page="/include/nav.jsp" />
 <p><br/></p>
 <div class="container">
-  <h2>파일 업로드 연습(동적폼 멀티파일처리)</h2>
+  <h2>Java 파일 업로드 연습(싱글파일처리)</h2>
+  <div>javax.servlet.http.Part</div>
   <hr/>
-  <form name="myform" method="post" action="FileUpload4Ok.st" enctype="multipart/form-data">
+  <form name="myform" method="post" action="FileUpload5Ok" enctype="multipart/form-data">
     파일명 :
-    <div>    
-    	<input type="button" value="파일박스추가" onclick="fileBoxAppend()" class="btn btn-primary mb-2"/>
-    	<input type="file" name="fName1" id="file1" class="form-control-file border mb-2" />
-    </div>
-    <div id="fileBox"></div>
+    <input type="file" name="fName" id="file" class="form-control-file border mb-2" />
     <input type="button" value="파일전송" onclick="fCheck()" class="btn btn-success form-control"/>
     <input type="hidden" name="nickName" value="${sNickName}" />
   </form>
   <hr/>
   <div class="row">
-  	<div class="col"><a href="FileDownload.st" class="btn btn-primary form-control">다운로드폴더로 이동하기</a></div>
-  	<div class="col"><a href="FileUpload.st" class="btn btn-primary form-control">돌아가기</a></div>
+    <div class="col"><a href="FileDownload.st" class="btn btn-primary form-control">다운로드폴더로 이동하기</a></div>
+    <div class="col"><a href="FileUpload.st" class="btn btn-warning form-control">돌아가기</a></div>
   </div>
 </div>
 <p><br/></p>

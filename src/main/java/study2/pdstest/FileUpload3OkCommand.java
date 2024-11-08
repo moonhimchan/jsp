@@ -29,7 +29,6 @@ public class FileUpload3OkCommand implements StudyInterface {
 		String file = "";
 		String ofName = "";
 		String fsName = "";
-		
 		while(fileNames.hasMoreElements()) {
 			file = (String) fileNames.nextElement();
 			ofName += multipartRequest.getOriginalFileName(file) + "/";
@@ -40,7 +39,7 @@ public class FileUpload3OkCommand implements StudyInterface {
 		
 		System.out.println("원본 파일명 집합 : " + ofName);
 		System.out.println("서버 파일명 집합 : " + fsName);
-		System.out.println("fName : " +multipartRequest.getFilesystemName("fNames"));
+		System.out.println("fName : " + multipartRequest.getParameter("fNames"));
 		
 		if(!ofName.equals("")) {
 			request.setAttribute("message", "파일이 업로드 되었습니다.");

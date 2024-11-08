@@ -14,12 +14,14 @@ import study2.ajax.AjaxIdCheck0Command;
 import study2.ajax.AjaxIdCheck1Command;
 import study2.ajax.AjaxPointCheckCommand;
 import study2.password.PassCheckOkCommand;
+import study2.pdstest.FileDeleteCheckCommand;
 import study2.pdstest.FileDeleteCommand;
 import study2.pdstest.FileDownloadCommand;
 import study2.pdstest.FileUpload1OkCommand;
 import study2.pdstest.FileUpload2OkCommand;
 import study2.pdstest.FileUpload3OkCommand;
 import study2.pdstest.FileUpload4OkCommand;
+import study2.pdstest.FileUpload5Ok;
 import study2.pdstest.JavaFileDownloadCommand;
 
 @SuppressWarnings("serial")
@@ -74,19 +76,25 @@ public class StudyController extends HttpServlet {
 			return;
 		}
 		else if(com.equals("/FileUpload")) {
-			viewPage += "/pdtest/fileUpload.jsp";
+			viewPage += "/pdstest/fileUpload.jsp";
 		}
 		else if(com.equals("/FileUpload1")) {
-			viewPage += "/pdtest/fileUpload1.jsp";
+			viewPage += "/pdstest/fileUpload1.jsp";
 		}
 		else if(com.equals("/FileUpload2")) {
-			viewPage += "/pdtest/fileUpload2.jsp";
+			viewPage += "/pdstest/fileUpload2.jsp";
 		}
 		else if(com.equals("/FileUpload3")) {
-			viewPage += "/pdtest/fileUpload3.jsp";
+			viewPage += "/pdstest/fileUpload3.jsp";
 		}
 		else if(com.equals("/FileUpload4")) {
-			viewPage += "/pdtest/fileUpload4.jsp";
+			viewPage += "/pdstest/fileUpload4.jsp";
+		}
+		else if(com.equals("/FileUpload5")) {
+			viewPage += "/pdstest/fileUpload5.jsp";
+		}
+		else if(com.equals("/FileUpload6")) {
+			viewPage += "/pdstest/fileUpload6.jsp";
 		}
 		else if(com.equals("/FileUpload1Ok")) {
 			command = new FileUpload1OkCommand();
@@ -108,13 +116,23 @@ public class StudyController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
+//		else if(com.equals("/FileUpload5Ok")) {
+//			command = new FileUpload5OkCommand();
+//			command.execute(request, response);
+//			viewPage = "/include/message.jsp";
+//		}
 		else if(com.equals("/FileDownload")) {
 			command = new FileDownloadCommand();
 			command.execute(request, response);
-			viewPage += "/pdtest/fileDownload.jsp";
+			viewPage += "/pdstest/fileDownload.jsp";
 		}
 		else if(com.equals("/FileDelete")) {
 			command = new FileDeleteCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/FileDeleteCheck")) {
+			command = new FileDeleteCheckCommand();
 			command.execute(request, response);
 			return;
 		}

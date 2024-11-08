@@ -22,7 +22,7 @@
     	
     	let fileSize1 = document.getElementById("file1").files[0].size;
     	if(fileSize1 > maxSize) {
-    		alert("업로드할 파일의 최대용량은 10MByte 입니다.");
+    		alert("업로드할 1개 파일의 최대용량은 10MByte 입니다.");
     	}
     	else if(ext1 != 'jpg' && ext1 != 'gif' && ext1 != 'png' && ext1 != 'hwp' && ext1 != 'zip' && ext1 != 'ppt' && ext1 != 'pptx' && ext1 != 'xlsx' && ext1 != 'txt' && ext1 != 'doc') {
     		alert("업로드 가능한 파일은 'jpg/gif/png/hwp/zip/ppt/pptx/xlsx/txt/doc'만 가능합니다.")
@@ -45,8 +45,8 @@
     }
     
     function deleteBox(cnt) {
-			$("#fBox"+cnt).remove();
-	 }
+    	$("#fBox"+cnt).remove();
+    }
   </script>
 </head>
 <body>

@@ -9,20 +9,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import study2.StudyInterface;
 
-public class FileDeleteCommand implements StudyInterface {
+public class FileDeleteCheckCommand implements StudyInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String fileName = request.getParameter("fileName")==null ? "" : request.getParameter("fileName");
+		String[] selectFileArray = request.getParameter("selectFileArray").split("/");
 		
 		String realPath = request.getServletContext().getRealPath("/images/pdstest/");
 		
-		File file = new File(realPath + fileName);
-		
 		String res = "0";
-		if(file.exists()) {
-			file.delete();
-			res = "1";
+		for(int i=0; i<selectFileArray.length; i++) {
+			File file = new File(realPath+selectFileArray[i]);
+			if(file.exists()) {
+				file.delete();
+				res = "1";
+			}
 		}
 		
 		response.getWriter().write(res);
