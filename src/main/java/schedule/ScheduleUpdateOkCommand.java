@@ -1,29 +1,28 @@
-package pds;
+package schedule;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class PdsDeleteCheckCommand implements PdsInterface {
+public class ScheduleUpdateOkCommand implements ScheduleInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idx = (request.getParameter("idx")==null || request.getParameter("idx").equals("")) ? 0 : Integer.parseInt(request.getParameter("idx"));
-		String[] fSNames = request.getParameter("fSName").split("/");
+		String part = request.getParameter("part")==null ? "" : request.getParameter("part");
+		String content = request.getParameter("content")==null ? "" : request.getParameter("content");
 		
-		// 서버에 존재하는 실제파일을 삭제처리
-		String realPath = request.getServletContext().getRealPath("/images/pds/");
-		for(String fSName : fSNames) {
-			new File(realPath + fSName).delete();
-		}
+		ScheduleVO vo = new ScheduleVO();
 		
-		// DB에서 자료 삭제처리
-		PdsDAO dao = new PdsDAO();
+		vo.setIdx(idx);
+		vo.setPart(part);
+		vo.setContent(content);
 		
-		int res = dao.setPdsDeleteCheck(idx);
+		ScheduleDAO dao = new ScheduleDAO();
+		
+		int res = dao.setScheduleUpdateOk(vo);
 		
 		response.getWriter().write(res + "");
 	}

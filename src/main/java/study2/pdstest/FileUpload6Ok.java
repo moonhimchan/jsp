@@ -45,16 +45,16 @@ public class FileUpload6Ok extends HttpServlet {
 			fileName = temp + "_" + fileName;
 			
 			FileOutputStream fos = new FileOutputStream(realPath + fileName);
-			            
+			
 			byte[] buffer = new byte[2048];
 			int size = 0;
 			while((size=fis.read(buffer)) != -1) {
 				fos.write(buffer, 0, size);
-			}							
+			}
 			fos.flush();
 			fos.close();
 			fis.close();
-		}             
+		}
 		
 		request.setAttribute("message", "파일이 업로드 되었습니다.");
 		request.setAttribute("url", "FileUpload6.st");

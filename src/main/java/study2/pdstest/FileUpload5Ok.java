@@ -49,7 +49,7 @@ public class FileUpload5Ok extends HttpServlet {
 		// 생성된 객체에 파일의 내용을 2048Byte씩 보내어준다.
 		byte[] buffer = new byte[2048];
 		int size = 0;
-		while((size=fis.read()) != -1) {
+		while((size=fis.read(buffer)) != -1) {
 			fos.write(buffer, 0, size);
 		}
 		fos.flush();
