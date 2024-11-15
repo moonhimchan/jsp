@@ -20,18 +20,18 @@ public class DbDeleteOk extends HttpServlet {
 		DbTestDAO dao = new DbTestDAO();
 		
 		int res = dao.setDbDeleteOk(idx);
-		
+
 		if(res != 0) {
-			request.setAttribute("message", "회원정보가 삭제가 되었습니다");
+			request.setAttribute("message", "회원 정보가 삭제되었습니다.");
 			request.setAttribute("url", "/study2/database/DbList");
-		} 
+		}
 		else {
-			request.setAttribute("message", "회원정보 삭제가 실패 되었습니다");
-			request.setAttribute("url", "/study2/database/DvSearch?idx="+idx);
+			request.setAttribute("message", "회원 정보삭제 실패~ 다시 가입해주세요.");
+			request.setAttribute("url", "/study2/database/DbSearch?idx="+idx);
 		}
 		
 		String viewPage = "/include/message.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-		dispatcher.forward(request, response);
+		dispatcher.forward(request, response);	
 	}
 }

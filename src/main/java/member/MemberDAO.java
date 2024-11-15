@@ -55,7 +55,7 @@ public class MemberDAO {
 				sql = "select * from member where mid = ? and userDel != 'OK'";
 			}
 			else {
-				sql = "select * from member where nickName = ?";
+				sql = "select * from member where nickName = ? ";
 			}
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mid);
@@ -192,18 +192,22 @@ public class MemberDAO {
 	public ArrayList<MemberVO> getMemberList(int startIndexNo, int pageSize, int level) {
 		ArrayList<MemberVO> vos = new ArrayList<MemberVO>();
 		try {
-			if(level == 999) {
-				sql= "SELECT *, DATEDIFF(NOW(), lastDate) AS elapsed_date FROM member ORDER BY idx DESC LIMIT ?, ?";
+			if(level == 999) {	// 전체회원 모두 보기(페이징처리)
+				sql = "select *, datediff(now(), lastDate) as elapsed_date from member order by idx desc limit ?,?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, startIndexNo);
 				pstmt.setInt(2, pageSize);
 			}
+			else if(level == 888) {	// 전체회원 모두 보기(단, 탈퇴신청회원(level=99)은 제외시킨다)
+				sql = "select * from member where level != 99 order by nickName";
+				pstmt = conn.prepareStatement(sql);
+			}
 			else {
-				sql= "SELECT *, DATEDIFF(NOW(), lastDate) AS elapsed_date FROM MEMBER WHERE LEVEL=? ORDER BY idx DESC LIMIT ?, ?";				
+				sql = "select *, datediff(now(), lastDate) as elapsed_date from member where level=? order by idx desc limit ?,?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, level);
 				pstmt.setInt(2, startIndexNo);
-				pstmt.setInt(3, pageSize);				
+				pstmt.setInt(3, pageSize);
 			}
 			rs = pstmt.executeQuery();
 			
@@ -219,7 +223,14 @@ public class MemberDAO {
 				vo.setTel(rs.getString("tel"));
 				vo.setAddress(rs.getString("address"));
 				vo.setEmail(rs.getString("email"));
-				vo.setContent(rs.getString("content"));
+				
+				String content = rs.getString("content").replaceAll("\\r?\\n", "<br/>");	// 엔터키 제어코드에 따른 오류방지..
+				//content = content.replace("'", "&#39;");	// content안에 따옴표(') 또는 (")가 있을때 error발생
+				//content = content.replace("\"", "&quot;");// 큰따옴표로 변환해도 error발생
+				//content = content.replace("\"", "&#39;"); // 따라서 큰따옴표는 작은따옴표로 변경처리한다.
+				content = content.replace("'", "&#39;").replace("\"", "&#39;");	// content안에 따옴표(') 또는 (")가 있을때 error발생
+				vo.setContent(content);
+				
 				vo.setPhoto(rs.getString("photo"));
 				vo.setLevel(rs.getInt("level"));
 				vo.setUserInfor(rs.getString("userInfor"));
@@ -229,7 +240,7 @@ public class MemberDAO {
 				vo.setTodayCnt(rs.getInt("todayCnt"));
 				vo.setStartDate(rs.getString("startDate"));
 				vo.setLastDate(rs.getString("lastDate"));
-				vo.setElapsed_date(rs.getInt("elapsed_date"));
+				if(level != 888) vo.setElapsed_date(rs.getInt("elapsed_date"));
 				vos.add(vo);
 			}
 		} catch (SQLException e) {
@@ -302,7 +313,7 @@ public class MemberDAO {
 	public int setMemberDeleteCheckOk(String mid) {
 		int res = 0;
 		try {
-			sql = "update member set userDel = 'OK', level = 99,  where mid = ?";
+			sql = "update member set userDel = 'OK', level = 99 where mid = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mid);
 			res = pstmt.executeUpdate();
@@ -336,13 +347,13 @@ public class MemberDAO {
 		int totRecCnt = 0;
 		try {
 			if(level == 999) {
-			 sql = "select count(idx) as totRecCnt from member";
-			 pstmt = conn.prepareStatement(sql);
+				sql = "select count(idx) as totRecCnt from member";
+				pstmt = conn.prepareStatement(sql);
 			}
 			else {
-			 sql = "select count(idx) as totRecCnt from member where level = ?";
-			 pstmt = conn.prepareStatement(sql);				
-			 pstmt.setInt(1, level);
+				sql = "select count(idx) as totRecCnt from member where level = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, level);
 			}
 			rs = pstmt.executeQuery();
 			
@@ -355,7 +366,7 @@ public class MemberDAO {
 		}
 		return totRecCnt;
 	}
-	
+
 	// 회원 상세정보 가져오기
 	public MemberVO getMemberIdxCheck(int idx) {
 		MemberVO vo = new MemberVO();
@@ -363,7 +374,8 @@ public class MemberDAO {
 			sql = "select * from member where idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
-			rs = pstmt.executeQuery();		
+			rs = pstmt.executeQuery();
+			
 			if(rs.next()) {
 				vo.setIdx(rs.getInt("idx"));
 				vo.setMid(rs.getString("mid"));
@@ -393,19 +405,46 @@ public class MemberDAO {
 		}
 		return vo;
 	}
-
-	public int setMemberDeleteOk() {
-		int res = 0;
+	
+	// 아이디 검색리스트...
+	public ArrayList<MemberVO> getMemberMidList(String mid) {
+		ArrayList<MemberVO> vos = new ArrayList<MemberVO>();
 		try {
-			sql = "delete from member where level = 99";
+			sql = "select * from member where mid like ?";
 			pstmt = conn.prepareStatement(sql);
-			res = pstmt.executeUpdate();
-			System.out.println("vo : " +vo);
+			pstmt.setString(1, "%" + mid + "%");
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				MemberVO vo = new MemberVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setPwd(rs.getString("pwd"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setName(rs.getString("name"));
+				vo.setGender(rs.getString("gender"));
+				vo.setBirthday(rs.getString("birthday"));
+				vo.setTel(rs.getString("tel"));
+				vo.setAddress(rs.getString("address"));
+				vo.setEmail(rs.getString("email"));
+				vo.setContent(rs.getString("content"));
+				vo.setPhoto(rs.getString("photo"));
+				vo.setLevel(rs.getInt("level"));
+				vo.setUserInfor(rs.getString("userInfor"));
+				vo.setUserDel(rs.getString("userDel"));
+				vo.setPoint(rs.getInt("point"));
+				vo.setVisitCnt(rs.getInt("visitCnt"));
+				vo.setTodayCnt(rs.getInt("todayCnt"));
+				vo.setStartDate(rs.getString("startDate"));
+				vo.setLastDate(rs.getString("lastDate"));
+				
+				vos.add(vo);
+			}
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		}	finally {
-			pstmtClose();
+			rsClose();
 		}
-		return res;
+		return vos;
 	}
 }

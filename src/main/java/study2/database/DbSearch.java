@@ -20,7 +20,7 @@ public class DbSearch extends HttpServlet {
 		DbTestDAO dao = new DbTestDAO();
 		
 		DbTestVO vo = dao.getDbTestSearch(idx);
-		
+
 		request.setAttribute("vo", vo);
 		
 		String viewPage = "/WEB-INF/study2/database/dbUpdate.jsp";

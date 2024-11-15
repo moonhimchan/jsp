@@ -39,8 +39,11 @@
 				      <a class="dropdown-item" href="${ctp}/study2/database/DbList">Database 연습</a>
 				      <a class="dropdown-item" href="PassCheckForm.st">암호화 연습</a>
 				      <a class="dropdown-item" href="AjaxTest.st">AJAX 연습</a>
+				      <a class="dropdown-item" href="AjaxTest2.st">AJAX 응용</a>
 				      <a class="dropdown-item" href="FileUpload.st">파일업로드 연습</a>
 				      <a class="dropdown-item" href="Calendar.st">인터넷 달력</a>
+				      <a class="dropdown-item" href="UuidForm.st">UUID</a>
+				      <a class="dropdown-item" href="PhotoView.st">그림연습 학습</a>
 				    </div>
 				  </div>
 	      </li>
@@ -55,7 +58,7 @@
 				      <a class="dropdown-item" href="javascript:memberDelete()">회원탈퇴</a>
 				      <c:if test="${sLevel > 1 || sLevel == 0}">
 					      <a class="dropdown-item" href="MemberList.mem">회원리스트</a>
-					      <a class="dropdown-item" href="#">쪽지보내기</a>
+					      <a class="dropdown-item" href="MemberMessage.msg">쪽지보내기</a>
 					      <a class="dropdown-item" href="Schedule.sc">일정관리</a>
 				      </c:if>
 				      <a class="dropdown-item" href="#">포인트사용내역</a>

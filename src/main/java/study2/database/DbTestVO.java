@@ -2,6 +2,7 @@ package study2.database;
 
 public class DbTestVO {
 	private int idx;
+	private String mid;
 	private String name;
 	private int age;
 	private String gender;
@@ -12,6 +13,12 @@ public class DbTestVO {
 	}
 	public void setIdx(int idx) {
 		this.idx = idx;
+	}
+	public String getMid() {
+		return mid;
+	}
+	public void setMid(String mid) {
+		this.mid = mid;
 	}
 	public String getName() {
 		return name;
@@ -40,7 +47,7 @@ public class DbTestVO {
 	
 	@Override
 	public String toString() {
-		return "DbTestVO [idx=" + idx + ", name=" + name + ", age=" + age + ", gender=" + gender + ", address=" + address
-				+ "]";
+		return "DbTestVO [idx=" + idx + ", mid=" + mid + ", name=" + name + ", age=" + age + ", gender=" + gender
+				+ ", address=" + address + "]";
 	}
 }

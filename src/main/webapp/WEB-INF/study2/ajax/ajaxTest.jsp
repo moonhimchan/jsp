@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
-	String mid = (String) session.getAttribute("sMid");
-	pageContext.setAttribute("mid", mid);
-	//if(mid==null || mid.equals("")) response.sendRedirect(request.getContextPath()+"/");
+  String mid = (String) session.getAttribute("sMid");
+  pageContext.setAttribute("mid", mid);
+  //if(mid == null || mid.equals("")) response.sendRedirect(request.getContextPath()+"/");
 %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -14,7 +14,7 @@
   <jsp:include page="/include/bs4.jsp" />
   <script>
     'use strict';
-  	
+    
     if(('${mid}' == null) || ('${mid}' == '')) {
     	alert("로그인후 사용하세요!");
     	location.href = '${ctp}/';
@@ -108,7 +108,7 @@
     		success:function(res) {
     			let str = "";
     			let resArray = res.split("/");
-    			str += '<div class="bg-secondary pl-2"><font color="white">';
+    			str += '<div class="bg-secondary p-2"><font color="white">';
     			str += '아이디 : <b>'+resArray[0]+'</b><br/>';
     			str += '성명 : <b>'+resArray[1]+'</b><br/>';
     			str += '포인트 : <b>'+resArray[2]+'</b>';

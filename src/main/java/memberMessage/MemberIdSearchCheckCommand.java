@@ -1,25 +1,28 @@
-package admin.member;
+package memberMessage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import admin.AdminDAO;
-import admin.AdminInterface;
+import member.MemberDAO;
+import member.MemberVO;
 
-public class MemberDeleteOkCommand implements AdminInterface {
+public class MemberIdSearchCheckCommand implements MemberMessageInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
 		
-		AdminDAO dao = new AdminDAO();
+		MemberDAO dao = new MemberDAO();
 		
-		int res = dao.setMemberDeleteOk(mid);
+		ArrayList<MemberVO> vos = dao.getMemberMidList(mid);
 		
-		response.getWriter().write(res + "");
+		request.setAttribute("vos", vos);
+		request.setAttribute("mid", mid);
+		
 	}
 
 }

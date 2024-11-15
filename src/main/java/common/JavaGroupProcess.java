@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public class JavaGroupProcess {
 	
-		public String getTimeBaseFileName() {
+	public String getTimeBasedFileName() {
 		// 파일명 중복방지(날짜로 처리)
 		Calendar cal = Calendar.getInstance();
 		int yy = cal.get(Calendar.YEAR);

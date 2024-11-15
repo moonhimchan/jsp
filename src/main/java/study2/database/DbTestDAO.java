@@ -110,7 +110,7 @@ public class DbTestDAO {
 		}
 		return vos;
 	}
-	
+
 	// 회원 자료 등록
 	public int setDbInputOk(DbTestVO vo) {
 		int res = 0;
@@ -129,12 +129,12 @@ public class DbTestDAO {
 		}
 		return res;
 	}
-	
-	// 회원 개인 정보 수정처리;
+
+	// 회원 개인 정보 수정처리
 	public int setDbUpdateOk(DbTestVO vo) {
 		int res = 0;
 		try {
-			sql = "update hoewon set name=?,age=?,gender=?,address=? where idx= ?";
+			sql = "update hoewon set name=?,age=?,gender=?,address=? where idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getName());
 			pstmt.setInt(2, vo.getAge());
@@ -143,26 +143,78 @@ public class DbTestDAO {
 			pstmt.setInt(5, vo.getIdx());
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("SQL 오류 :" +e.getMessage());
-		}	finally {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
 			pstmtClose();
 		}
 		return res;
 	}
 
-	// 회원 정보 삭제 처리하기
+	// 회원 정보 삭제처리
 	public int setDbDeleteOk(int idx) {
 		int res = 0;
 		try {
-			sql = "delete from hoewon where idx= ?";
+			sql = "delete from hoewon where idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("SQL 오류 :" +e.getMessage());
-		}	finally {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
 			pstmtClose();
 		}
 		return res;
+	}
+
+	// 아이디로 검색하여 vo자료 넘겨주기
+	public DbTestVO getIdSearch(String mid) {
+		try {
+			sql = "select * from hoewon3 where mid = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				vo = new DbTestVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setName(rs.getString("name"));
+				vo.setAge(rs.getInt("age"));
+				vo.setGender(rs.getString("gender"));
+				vo.setAddress(rs.getString("address"));
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vo;
+	}
+	
+	
+	// 아이디가 비숫한 자료 모두 검색해서 가져오기
+	public ArrayList<DbTestVO> getIdSameSearch(String mid) {
+		ArrayList<DbTestVO> vos = new ArrayList<DbTestVO>();
+		try {
+				sql = "select * from hoewon3 where mid like ? order by mid";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%"+ mid +"%");
+			  rs = pstmt.executeQuery();
+			while(rs.next()) {
+				vo = new DbTestVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setName(rs.getString("name"));
+				vo.setAge(rs.getInt("age"));
+				vo.setGender(rs.getString("gender"));
+				vo.setAddress(rs.getString("address"));
+				
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
 	}
 }

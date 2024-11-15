@@ -49,26 +49,43 @@
     	});
     }
     
+    /* 등급을 변경하거나 페이지를 변경한다면 무조건 1Page로 간다는 전제조건으로 시작한다. */
+    
     // 등급별 조회
     function levelViewCheck() {
     	let level = document.getElementById("levelView").value;
-    	location.href = "MemberList.ad?pageSize=${pageSize}&pag=${pag}&level="+level;
+    	//location.href = "MemberList.ad?pageSize=${pageSize}&pag=${pag}&level="+level;
+    	location.href = "MemberList.ad?pageSize=${pageSize}&pag=1&level="+level;
     }
     
     // 사용자 페이지 설정
     function pageSizeChange() {
     	let pageSize = document.getElementById("pageSize").value;
+    	//location.href = "MemberList.ad?pageSize="+pageSize+"&pag=${pag}&level=${level}";
     	location.href = "MemberList.ad?pageSize="+pageSize+"&pag=1&level=${level}";
     }
     
-    // 체크박스 부분/전체 선택
-    function selectAll() {
-      let selectAllCheckbox = document.getElementById("selectAll");
-      let checkboxes = document.querySelectorAll('input[name="selectAll"]');
-
-      checkboxes.forEach(checkbox => {
-      	checkbox.checked = selectAllCheckbox.checked;
-      });
+    // 탈퇴신청후 30일 지난 회원들 DB에서 자료 삭제시키기
+    function delCheck(mid) {
+    	let ans = confirm("회원정보를 삭제하시겠습니까?");
+    	if(!ans) return false;
+    		
+    	$.ajax({
+    		type : "post",
+    		url  : "MemberDeleteOk.ad",
+    		data : {mid : mid},
+    		success:function(res) {
+    			if(res != 0) {
+    				alert(mid + " 회원정보를 DB에서 삭제 시켰습니다.");
+    				location.reload();
+    			}
+    			else alert(mid + "회원정보 삭제 실패~~");
+    		},
+    		error : function() {
+    			alert("전송오류!");
+    		}
+    	});
+    		
     }
   </script>
 </head>
@@ -76,6 +93,23 @@
 <p><br/></p>
 <div class="container">
   <h2 class="text-center">회 원 리 스 트</h2>
+  
+  <!-- 사용자 페이지 설정 -->
+  <table class="table table-borderless m-0">
+    <tr>
+      <td class="text-right">한페이지 분량 :
+        <select name="pageSize" id="pageSize" onchange="pageSizeChange()">
+          <option value="3"  <c:if test="${pageSize == 3}"  >selected</c:if>>3건</option>
+          <option value="5"  <c:if test="${pageSize == 5}"  >selected</c:if>>5건</option>
+          <option value="10" <c:if test="${pageSize == 10}" >selected</c:if>>10건</option>
+          <option value="15" <c:if test="${pageSize == 15}" >selected</c:if>>15건</option>
+          <option value="20" <c:if test="${pageSize == 20}" >selected</c:if>>20건</option>
+          <option value="30" <c:if test="${pageSize == 30}" >selected</c:if>>30건</option>
+        </select>
+      </td>
+    </tr>
+  </table>
+  
   <table class="table table-borderless m-0">
     <tr>
       <td class="text-right">등급별조회
@@ -92,7 +126,6 @@
   </table>
   <table class="table table-hover">
     <tr class="table-secondary">
-    	<th><input type="checkbox" name="selectAll" id="selectAll" onclick="selectAll()"/></th>
       <th>번호</th>
       <th>닉네임</th>
       <th>아이디</th>
@@ -106,7 +139,6 @@
     </tr>
 	  <c:forEach var="vo" items="${vos}" varStatus="st">
 	    <tr <c:if test="${vo.userInfor != '공개'}"> style="background-color:#fcc" </c:if>>
-	    	<td><input type="checkbox" name="selectAll" id="selectAll"/></td>
 	      <td>${vo.idx}</td>
 	      <td>${vo.nickName}</td>
 	      <td><a href="MemberDetailView.ad?idx=${vo.idx}">${vo.mid}</a></td>
@@ -120,10 +152,13 @@
 	      </td>
 	      <td>
 	        <c:if test="${vo.userDel == 'NO'}">활동중</c:if>
-	        <c:if test="${vo.userDel != 'NO'}"><font color='red'>탈퇴신청중</font>(${vo.elapsed_date})</c:if>
-		      <c:if test="${vo.userDel != 'NO' && vo.elapsed_date >= 30}">
-		       <a href="MemberDeleteOk.ad" value="${vo.level}" style="color: red;">회원삭제</a>
-		      </c:if>
+	        <c:if test="${vo.userDel != 'NO'}">
+	          <font color='red'>탈퇴신청중</font>
+	          (
+	            <c:if test="${vo.elapsed_date < 30}">${vo.elapsed_date}</c:if>
+	            <c:if test="${vo.elapsed_date >= 30}"><a href="javascript:delCheck('${vo.mid}')" class="badge badge-danger" title="탈퇴처리">${vo.elapsed_date}</a></c:if>
+	          )
+	        </c:if>
 	      </td>
 	      <td>
 	        <select name="level" id="level" onchange="levelChange(this)">
@@ -137,21 +172,6 @@
 	    </tr>
   	</c:forEach>
   	<tr><td colspan="10" class="m-0 p-0"></td></tr>
-  </table>
-  <!-- 사용자 페이지 설정 -->
-  <table class="table table-borderless m-0">
-    <tr>
-      <td class="text-right">
-        <select name="pageSize" id="pageSize" onchange="pageSizeChange()">
-          <option <c:if test="${pageSize == 3}"  >selected</c:if> >3</option>
-          <option <c:if test="${pageSize == 5}"  >selected</c:if> >5</option>
-          <option <c:if test="${pageSize == 10}" >selected</c:if> >10</option>
-          <option <c:if test="${pageSize == 15}" >selected</c:if> >15</option>
-          <option <c:if test="${pageSize == 20}" >selected</c:if> >20</option>
-          <option <c:if test="${pageSize == 30}" >selected</c:if> >30</option>
-        </select>
-      </td>
-    </tr>
   </table>
   
 <!-- 블록페이지 시작 -->

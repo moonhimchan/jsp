@@ -21,12 +21,10 @@ public class MemberVO {
 	private int todayCnt;
 	private String startDate;
 	private String lastDate;
-//sql 에서 사용한 필드명	
 	
-	private String tempMid;	// 아이디 중복체크를위한 임시 아이디
-	private int elapsed_date; // 최종접속 경과일 (탈퇴시 사용)
-	private String strLevel; //회원등급명
-//프로그램밍 도중 만든 생성명	
+	private String tempMid;	  // 아이디 중복체크를위한 임시 아이디
+	private int elapsed_date;	// 최종접속 경과일(탈퇴시 사용)
+	private String strLevel;	// 회원등급명
 	
 	public int getIdx() {
 		return idx;

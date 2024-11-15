@@ -8,14 +8,14 @@ public class SecurityUtil {
     String sha = "";
     try{
        MessageDigest sh = MessageDigest.getInstance("SHA-256");
-       //int salt = (int)(Math.random()*100)+1;
+       //int salt = (int)(Math.random()*100) + 1;
        //str += salt;
        
        sh.update(str.getBytes());
        byte byteData[] = sh.digest();
        StringBuffer sb = new StringBuffer();
        for(int i = 0 ; i < byteData.length ; i++){
-           sb.append(Integer.toString((byteData[i]&0xff) + 0x100, 16).substring(1));
+         sb.append(Integer.toString((byteData[i]&0xff) + 0x100, 16).substring(1));
        }
        sha = sb.toString();
    }catch(NoSuchAlgorithmException e){

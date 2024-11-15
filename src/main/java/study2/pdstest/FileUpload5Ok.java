@@ -38,7 +38,7 @@ public class FileUpload5Ok extends HttpServlet {
 		
 		// 파일명 중복방지처리(날짜를 이용...)
 		JavaGroupProcess jgp = new JavaGroupProcess();
-		String temp = jgp.getTimeBaseFileName();
+		String temp = jgp.getTimeBasedFileName();
 		
 		// 중복방지를 위한 파일명 조합하기(파일형식: 중복방지코드_파일명.확장자)
 		fileName = temp + "_" + fileName;
